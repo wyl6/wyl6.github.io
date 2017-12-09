@@ -4,14 +4,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>python函数式编程-filter | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="filter用法  filter(f,iterator)，返回由符合条件元素组成的新列表 filter和map类似，根据每个值是True还是False决定是否保留元素 filter返回的也是惰性序列，由于使用惰性计算，只有取filter结果的时候，才会每次真正筛选并返回筛选的元素．   example 1: 判断奇偶 ">
+<meta name="keywords" content="函数式编程 filter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python函数式编程-filter">
+<meta property="og:url" content="http://yoursite.com/2017/12/07/python函数式编程-filter/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="filter用法  filter(f,iterator)，返回由符合条件元素组成的新列表 filter和map类似，根据每个值是True还是False决定是否保留元素 filter返回的也是惰性序列，由于使用惰性计算，只有取filter结果的时候，才会每次真正筛选并返回筛选的元素．   example 1: 判断奇偶 1234def is_odd(x):    return x%2 == 0an">
+<meta property="og:updated_time" content="2017-12-09T08:08:59.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="python函数式编程-filter">
+<meta name="twitter:description" content="filter用法  filter(f,iterator)，返回由符合条件元素组成的新列表 filter和map类似，根据每个值是True还是False决定是否保留元素 filter返回的也是惰性序列，由于使用惰性计算，只有取filter结果的时候，才会每次真正筛选并返回筛选的元素．   example 1: 判断奇偶 1234def is_odd(x):    return x%2 == 0an">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,164 +68,7 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-    <article id="post-python高级特性生成器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/09/python高级特性生成器/" class="article-date">
-  <time datetime="2017-12-09T07:49:14.000Z" itemprop="datePublished">2017-12-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/09/python高级特性生成器/">python高级特性-生成器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#生成器generator</p>
-<blockquote>
-<p>python中，一边循环一边计算的机制，成为生成器<br>利用生成器，可以减少内存使用</p>
-</blockquote>
-<ol>
-<li><p>生成方法一生成器表达式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = (x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>))</span><br><span class="line"><span class="keyword">for</span> b <span class="keyword">in</span> a: print(b,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成方法二生成器函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(maxn)</span>:</span></span><br><span class="line">    n,a,b = <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> n&lt;maxn:</span><br><span class="line">        <span class="keyword">yield</span> b</span><br><span class="line">        a,b = b,a+b</span><br><span class="line">        n = n+<span class="number">1</span></span><br><span class="line">a = fib(<span class="number">8</span>);print(a)<span class="comment">#a是一个generator</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>输出方法一for循环迭代输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> a: print(x,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>输出方法二next()迭代输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="keyword">True</span> :</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        x = next(a)</span><br><span class="line">        print(x,end=<span class="string">' '</span>)</span><br><span class="line">    <span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">'\nGenertor return value:'</span>,e.value)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>每次调用next()的时候，遇到yield返回，下一次从返回处继续执行<br>循环不断调用yield，就会不断中断，从而边计算边取值，达到节省内存效果<br>可以用yield方法调用,当没有更多元素时，抛出StopIteration错误</p>
-</blockquote>
-<ol>
-<li><p>注意：生成器只能遍历一次</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#以下代码只能输出一组结果</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> a: print(x,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> a: print(x,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用打印杨辉三角</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(maxn)</span>:</span></span><br><span class="line">    ans = [<span class="number">1</span>];<span class="keyword">yield</span> ans</span><br><span class="line">    ans = [<span class="number">1</span>,<span class="number">1</span>];<span class="keyword">yield</span> ans</span><br><span class="line">    n,tmp = <span class="number">2</span>,[<span class="number">1</span>,<span class="number">1</span>]<span class="comment">#等式右边相当于一个tuple分别给等式左边变量赋值</span></span><br><span class="line">    <span class="keyword">while</span> n&lt;maxn:</span><br><span class="line">        ans = []</span><br><span class="line">        n = n+<span class="number">1</span></span><br><span class="line">        ans.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-2</span>):</span><br><span class="line">            ans.append(tmp[i]+tmp[i+<span class="number">1</span>])</span><br><span class="line">        ans.append(<span class="number">1</span>)</span><br><span class="line">        tmp = ans</span><br><span class="line">        <span class="keyword">yield</span> ans</span><br><span class="line">a = test(<span class="number">10</span>)</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> a:</span><br><span class="line">    print(x)</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/12/09/python高级特性生成器/" data-id="cjaz295l40003xhnholcz471x" class="article-share-link" data-share="baidu" data-title="python高级特性-生成器">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/12/09/python高级特性生成器/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python高级特性迭代器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/09/python高级特性迭代器/" class="article-date">
-  <time datetime="2017-12-09T07:16:15.000Z" itemprop="datePublished">2017-12-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/09/python高级特性迭代器/">python高级特性-迭代器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li><p>迭代</p>
-<blockquote>
-<p>可以直接作用于for循环的对象,称为可迭代对象Iterable:<br>1.集合数据类型：list,tuple,set,dict,str<br>2.generator:包括生成器和带yield的generator funcion</p>
-</blockquote>
-<ol>
-<li><p>list迭代</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> list:print(a,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>dict迭代</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> d:print(key,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> d.values():print(value,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>字符串迭代</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">for</span> a <span class="keyword">in</span> <span class="string">'afsf'</span>:print(a,end=<span class="string">' '</span>)</span><br><span class="line">print()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>判断是否可以迭代</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">from</span> collections <span class="keyword">import</span> Iterable</span><br><span class="line">print(isinstance(list,Iterable))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>list变成索引-元素对的例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i,value <span class="keyword">in</span> enumerate([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]):</span><br><span class="line">print(i,value)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>迭代器</p>
-<blockquote>
-<p>可以被next()不断调用并返回下一个值的对象称为Iterator<br>集合数据类型list,tuple,set,dict,str都是，Iterable，但都不是Iterator\<br>for循环内部实际上就是先调用iter()把Iterable转为Iterator再进行循环迭代的</p>
-</blockquote>
-<ol>
-<li><p>迭代器判断</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</span><br><span class="line">print(isinstance((),Iterator))</span><br><span class="line">print(isinstance(&#123;&#125;,Iterator))</span><br><span class="line">print(isinstance([],Iterator))</span><br><span class="line">print(isinstance(<span class="string">'fsaf'</span>,Iterator))</span><br><span class="line"><span class="comment">#使用iter()函数变成Iterator</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</span><br><span class="line">print(isinstance(iter(()),Iterator))</span><br><span class="line">print(isinstance(iter(&#123;&#125;),Iterator))</span><br><span class="line">print(isinstance(iter([]),Iterator))</span><br><span class="line">print(isinstance(iter(<span class="string">'fsaf'</span>),Iterator))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>为什么list不是Iterator</p>
-<blockquote>
-<p>Iterator表示一个数据流，我们可以知道它的长度，通过next()来计算下一个数据，可以是无限长的<br>Iterator是一个惰性序列，它的计算是惰性的，需要返回下一个数据时才会去计算<br>而集合数据类型是无法达到这样的功能的</p>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/12/09/python高级特性迭代器/" data-id="cjaz295l60004xhnhiuq7ac5q" class="article-share-link" data-share="baidu" data-title="python高级特性-迭代器">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/12/09/python高级特性迭代器/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python函数式编程-filter" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-python函数式编程-filter" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/07/python函数式编程-filter/" class="article-date">
   <time datetime="2017-12-06T23:05:37.000Z" itemprop="datePublished">2017-12-07</time>
@@ -233,8 +81,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/07/python函数式编程-filter/">python函数式编程-filter</a>
+    <h1 class="article-title" itemprop="name">
+      python函数式编程-filter
     </h1>
   
 
@@ -288,56 +136,33 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-github" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/01/hello-github/" class="article-date">
-  <time datetime="2017-12-01T13:21:04.000Z" itemprop="datePublished">2017-12-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2017/12/09/python高级特性迭代器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
+          python高级特性-迭代器
+        
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/01/hello-github/">hello,github</a>
-    </h1>
   
+    <a href="/2017/12/01/hello-github/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hello,github</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>hello,github!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/12/01/hello-github/" data-id="cjaz295km0000xhnhjmbxfjjh" class="article-share-link" data-share="baidu" data-title="hello,github">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/12/01/hello-github/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
 
 
-  
-
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/12/07/python函数式编程-filter/" data-title="python函数式编程-filter" data-url="http://yoursite.com/2017/12/07/python函数式编程-filter/"></div>
+  </section>
 </section>
       
       <aside id="sidebar">
