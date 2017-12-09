@@ -4,14 +4,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: python | Hexo</title>
+  <title>python函数式编程map | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/python/index.html">
+  <meta name="description" content="#python函数式编程之map用法  map(f,iterator)把结果作为新的iterator返回map返回什么结果看iterator是什么类型   example 1 12345def f(x):    return x*xans = map(f,[1,2,3,4,5,6,7,8,9])#f作用在list的每一">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python函数式编程map">
+<meta property="og:url" content="http://yoursite.com/2017/12/09/python函数式编程map/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#python函数式编程之map用法  map(f,iterator)把结果作为新的iterator返回map返回什么结果看iterator是什么类型   example 1 12345def f(x):    return x*xans = map(f,[1,2,3,4,5,6,7,8,9])#f作用在list的每一个元素并把结果返回为新的listprint(ans)#看不懂的东西print(l">
+<meta property="og:updated_time" content="2017-12-09T08:21:28.879Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="python函数式编程map">
+<meta name="twitter:description" content="#python函数式编程之map用法  map(f,iterator)把结果作为新的iterator返回map返回什么结果看iterator是什么类型   example 1 12345def f(x):    return x*xans = map(f,[1,2,3,4,5,6,7,8,9])#f作用在list的每一个元素并把结果返回为新的listprint(ans)#看不懂的东西print(l">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,154 +68,84 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/09/python函数式编程sorted/" class="archive-article-date">
-  <time datetime="2017-12-09T08:41:07.000Z" itemprop="datePublished">Dec 9</time>
+      <section id="main"><article id="post-python函数式编程map" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/09/python函数式编程map/" class="article-date">
+  <time datetime="2017-12-09T08:18:07.000Z" itemprop="datePublished">2017-12-09</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/python函数式编程sorted/">python函数式编程sorted</a>
+    <h1 class="article-title" itemprop="name">
+      python函数式编程map
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/09/python函数式编程reduce/" class="archive-article-date">
-  <time datetime="2017-12-09T08:22:03.000Z" itemprop="datePublished">Dec 9</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/python函数式编程reduce/">python函数式编程reduce</a>
-    </h1>
-  
+        <p>#python函数式编程之map用法</p>
+<blockquote>
+<p>map(f,iterator)把结果作为新的iterator返回<br>map返回什么结果看iterator是什么类型</p>
+</blockquote>
+<ol>
+<li><p>example 1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x*x</span><br><span class="line">ans = map(f,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>])<span class="comment">#f作用在list的每一个元素并把结果返回为新的list</span></span><br><span class="line">print(ans)<span class="comment">#看不懂的东西</span></span><br><span class="line">print(list(ans))<span class="comment"># iterator是一个惰性序列，通过list让整个函数都计算出来并返回一个list</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>example 2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ans = list(map(str,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]))</span><br><span class="line">print(ans)</span><br></pre></td></tr></table></figure></li>
+</ol>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/09/python函数式编程map/" class="archive-article-date">
-  <time datetime="2017-12-09T08:18:07.000Z" itemprop="datePublished">Dec 9</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/python函数式编程map/">python函数式编程map</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/09/python高级特性生成器/" class="archive-article-date">
-  <time datetime="2017-12-09T07:49:14.000Z" itemprop="datePublished">Dec 9</time>
-</a>
+    </div>
+    <footer class="article-footer">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/python高级特性生成器/">python高级特性-生成器</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/09/python高级特性迭代器/" class="archive-article-date">
-  <time datetime="2017-12-09T07:16:15.000Z" itemprop="datePublished">Dec 9</time>
-</a>
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程map/" data-id="cjaz3wmvb0001oanhkaip06q0" class="article-share-link" data-share="baidu" data-title="python函数式编程map">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/python高级特性迭代器/">python高级特性-迭代器</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/07/python函数式编程-filter/" class="archive-article-date">
-  <time datetime="2017-12-06T23:05:37.000Z" itemprop="datePublished">Dec 7</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/07/python函数式编程-filter/">python函数式编程-filter</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/01/hello-github/" class="archive-article-date">
-  <time datetime="2017-12-01T13:21:04.000Z" itemprop="datePublished">Dec 1</time>
-</a>
+        <a href="http://yoursite.com/2017/12/09/python函数式编程map/#ds-thread" class="article-comment-link">Comments</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/01/hello-github/">hello,github</a>
-    </h1>
-  
 
-    </header>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/09/python函数式编程reduce/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          python函数式编程reduce
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/12/09/python高级特性生成器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python高级特性-生成器</div>
+    </a>
   
+</nav>
 
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/12/09/python函数式编程map/" data-title="python函数式编程map" data-url="http://yoursite.com/2017/12/09/python函数式编程map/"></div>
+  </section>
 </section>
       
       <aside id="sidebar">
