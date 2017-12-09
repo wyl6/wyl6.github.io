@@ -13,7 +13,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/09/python函数式编程之返回函数/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="#函数作为返回值  返回函数返回函数时相关参数和变量保存在返回函数中1234567891011def lazy_sum(*args):    def sum():        ans = 0        for i in args:            ans = ans+i        return ans    return suma = lazy_sum(1,2,3,4,5)prin">
-<meta property="og:updated_time" content="2017-12-09T12:08:32.179Z">
+<meta property="og:updated_time" content="2017-12-09T12:12:02.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python函数式编程之返回函数">
 <meta name="twitter:description" content="#函数作为返回值  返回函数返回函数时相关参数和变量保存在返回函数中1234567891011def lazy_sum(*args):    def sum():        ans = 0        for i in args:            ans = ans+i        return ans    return suma = lazy_sum(1,2,3,4,5)prin">
@@ -97,22 +97,38 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;function lazy_sum.&lt;locals&gt;.sum at 0x7f47807908c8&gt;</span><br><span class="line">15</span><br></pre></td></tr></table></figure>
 <p><strong>每次调用lazy_sum时，都会返回一个新的函数，即使传入相同的参数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f1 = lazy_sum()</span><br><span class="line">f2 = lazy_sum()</span><br><span class="line">print(f1 == f2)</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 闭包</span><br><span class="line">**闭包：</span><br><span class="line">1.内部函数可以引用外部函数的参数或变量（不一定就是上一层函数中的参数和变量）</span><br><span class="line">2.外部函数把内部函数作为返回值，相关参数和变量都保存在内部函数中**</span><br><span class="line">```Python</span><br><span class="line">def count():</span><br><span class="line">    fn = []</span><br><span class="line">    for i in range(1, 4):</span><br><span class="line">        def get():</span><br><span class="line">            def f():</span><br><span class="line">                return i * i</span><br><span class="line">            return f</span><br><span class="line">        fn.append(get())</span><br><span class="line">    return fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><figcaption><span>9 9```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">直到调用f()才执行函数，此时i已经变成３,所以最终结果是9 9 9，而不是1,4,9</span><br><span class="line">所以函数最好不要引用循环变量，以及后续会发生变化的量</span><br><span class="line">**如果一定要引用循环变量，再创建一个函数，用函数绑定当前循环变量的值**</span><br><span class="line">```Python</span><br><span class="line">def count():</span><br><span class="line">    def f(j):</span><br><span class="line">        def g():</span><br><span class="line">            return j*j</span><br><span class="line">        return g</span><br><span class="line">    fn = []</span><br><span class="line">    for i in range(1,4):</span><br><span class="line">        fn.append(f(i))</span><br><span class="line">    return fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><figcaption><span>4 9```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. ps</span><br><span class="line">	1. **练习：闭包返回计数器函数，每次返回递增整数**</span><br><span class="line">    ```Python</span><br><span class="line">    def createCounter():</span><br><span class="line">        i = 0</span><br><span class="line">        def counter():</span><br><span class="line">            nonlocal i#闭包对闭包函数外，函数内的变量进行引用</span><br><span class="line">            i = i+1</span><br><span class="line">            return i</span><br><span class="line">        return counter</span><br><span class="line">    countA = createCounter()</span><br><span class="line">    print(countA(),countA(),countA())</span><br></pre></td></tr></table></figure>
-<pre><code><figure class="highlight plain"><figcaption><span>2 3```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. **三种不同写法**</span><br><span class="line">```Python</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def get():</span><br><span class="line">       def f():</span><br><span class="line">           return 3*3</span><br><span class="line">       return f#######返回f函数</span><br><span class="line">   fn.append(get())###返回结果</span><br><span class="line">   return fn</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def get():</span><br><span class="line">       def f():</span><br><span class="line">           return 3*3</span><br><span class="line">       return f()######返回结果</span><br><span class="line">   fn.append(get)#####返回函数</span><br><span class="line">   return fn</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def f():</span><br><span class="line">       return 3*3</span><br><span class="line">   fn.append(f)#####返回函数</span><br><span class="line">   return fn</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">False</span><br></pre></td></tr></table></figure>
+<ol>
+<li>闭包<br><strong>闭包：<br>1.内部函数可以引用外部函数的参数或变量（不一定就是上一层函数中的参数和变量）<br>2.外部函数把内部函数作为返回值，相关参数和变量都保存在内部函数中</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    fn = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">()</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">                <span class="keyword">return</span> i * i</span><br><span class="line">            <span class="keyword">return</span> f</span><br><span class="line">        fn.append(get())</span><br><span class="line">    <span class="keyword">return</span> fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9 9 9</span><br></pre></td></tr></table></figure>
+<p>直到调用f()才执行函数，此时i已经变成３,所以最终结果是9 9 9，而不是1,4,9<br>所以函数最好不要引用循环变量，以及后续会发生变化的量<br><strong>如果一定要引用循环变量，再创建一个函数，用函数绑定当前循环变量的值</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(j)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">g</span><span class="params">()</span>:</span></span><br><span class="line">            <span class="keyword">return</span> j*j</span><br><span class="line">        <span class="keyword">return</span> g</span><br><span class="line">    fn = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">        fn.append(f(i))</span><br><span class="line">    <span class="keyword">return</span> fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 4 9</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>ps</p>
+<ol>
+<li><p><strong>练习：闭包返回计数器函数，每次返回递增整数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createCounter</span><span class="params">()</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">counter</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">nonlocal</span> i<span class="comment">#闭包对闭包函数外，函数内的变量进行引用</span></span><br><span class="line">        i = i+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> counter</span><br><span class="line">countA = createCounter()</span><br><span class="line">print(countA(),countA(),countA())</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>三种不同写法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#----------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">fn = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span>*<span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> f<span class="comment">#######返回f函数</span></span><br><span class="line">fn.append(get())<span class="comment">###返回结果</span></span><br><span class="line"><span class="keyword">return</span> fn</span><br><span class="line"><span class="comment">#----------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">fn = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span>*<span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> f()<span class="comment">######返回结果</span></span><br><span class="line">fn.append(get)<span class="comment">#####返回函数</span></span><br><span class="line"><span class="keyword">return</span> fn</span><br><span class="line"><span class="comment">#----------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">fn = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span>*<span class="number">3</span></span><br><span class="line">fn.append(f)<span class="comment">#####返回函数</span></span><br><span class="line"><span class="keyword">return</span> fn</span><br></pre></td></tr></table></figure>
+<p>最终结果都是一样的哈哈，现在的程序员，真的是……没毛病！！！</p>
+</li>
+</ol>
+</li>
+</ol>
 
-最终结果都是一样的哈哈，现在的程序员，真的是......没毛病！！！
-</code></pre>
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python函数式编程之返回函数/" data-id="cjazarekj0008rgnhlxuwmn0o" class="article-share-link" data-share="baidu" data-title="python函数式编程之返回函数">分享到</a>
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程之返回函数/" data-id="cjazavmql0008wenha49ddug5" class="article-share-link" data-share="baidu" data-title="python函数式编程之返回函数">Share</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python函数式编程之返回函数/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://yoursite.com/2017/12/09/python函数式编程之返回函数/#ds-thread" class="article-comment-link">Comments</a>
       
 
       
@@ -126,7 +142,7 @@
   
   
     <a href="/2017/12/09/python函数式编程sorted/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">python函数式编程sorted</div>
     </a>
   
@@ -147,7 +163,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">8</span></li></ul>
     </div>
@@ -156,7 +172,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
@@ -165,7 +181,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
@@ -174,7 +190,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">近期文章</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -205,7 +221,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">友情链接</h3>
+    <h3 class="widget-title">Links</h3>
     <div class="widget">
       <ul>
         
@@ -250,7 +266,7 @@
 </nav>
   <!-- totop start -->
 <div id="totop">
-<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+<a title="totop"><img src="/img/scrollup.png"/></a>
 </div>
 
 <!-- totop end -->
