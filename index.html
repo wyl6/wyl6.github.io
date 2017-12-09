@@ -65,6 +65,63 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-python函数式编程之返回函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/09/python函数式编程之返回函数/" class="article-date">
+  <time datetime="2017-12-09T11:21:26.000Z" itemprop="datePublished">2017-12-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/09/python函数式编程之返回函数/">python函数式编程之返回函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#函数作为返回值</p>
+<ol>
+<li>返回函数<br><strong>返回函数时相关参数和变量保存在返回函数中</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lazy_sum</span><span class="params">(*args)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">()</span>:</span></span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> args:</span><br><span class="line">            ans = ans+i</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">a = lazy_sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">print(a)<span class="comment">#返回函数</span></span><br><span class="line">b = a()</span><br><span class="line">print(b)<span class="comment">#返回结果</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;function lazy_sum.&lt;locals&gt;.sum at 0x7f47807908c8&gt;</span><br><span class="line">15</span><br></pre></td></tr></table></figure>
+<p><strong>每次调用lazy_sum时，都会返回一个新的函数，即使传入相同的参数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f1 = lazy_sum()</span><br><span class="line">f2 = lazy_sum()</span><br><span class="line">print(f1 == f2)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 闭包</span><br><span class="line">**闭包：</span><br><span class="line">1.内部函数可以引用外部函数的参数或变量（不一定就是上一层函数中的参数和变量）</span><br><span class="line">2.外部函数把内部函数作为返回值，相关参数和变量都保存在内部函数中**</span><br><span class="line">```Python</span><br><span class="line">def count():</span><br><span class="line">    fn = []</span><br><span class="line">    for i in range(1, 4):</span><br><span class="line">        def get():</span><br><span class="line">            def f():</span><br><span class="line">                return i * i</span><br><span class="line">            return f</span><br><span class="line">        fn.append(get())</span><br><span class="line">    return fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>9 9```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">直到调用f()才执行函数，此时i已经变成３,所以最终结果是9 9 9，而不是1,4,9</span><br><span class="line">所以函数最好不要引用循环变量，以及后续会发生变化的量</span><br><span class="line">**如果一定要引用循环变量，再创建一个函数，用函数绑定当前循环变量的值**</span><br><span class="line">```Python</span><br><span class="line">def count():</span><br><span class="line">    def f(j):</span><br><span class="line">        def g():</span><br><span class="line">            return j*j</span><br><span class="line">        return g</span><br><span class="line">    fn = []</span><br><span class="line">    for i in range(1,4):</span><br><span class="line">        fn.append(f(i))</span><br><span class="line">    return fn</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">print(f1(),f2(),f3())</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>4 9```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. ps</span><br><span class="line">	1. **练习：闭包返回计数器函数，每次返回递增整数**</span><br><span class="line">    ```Python</span><br><span class="line">    def createCounter():</span><br><span class="line">        i = 0</span><br><span class="line">        def counter():</span><br><span class="line">            nonlocal i#闭包对闭包函数外，函数内的变量进行引用</span><br><span class="line">            i = i+1</span><br><span class="line">            return i</span><br><span class="line">        return counter</span><br><span class="line">    countA = createCounter()</span><br><span class="line">    print(countA(),countA(),countA())</span><br></pre></td></tr></table></figure>
+<pre><code><figure class="highlight plain"><figcaption><span>2 3```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. **三种不同写法**</span><br><span class="line">```Python</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def get():</span><br><span class="line">       def f():</span><br><span class="line">           return 3*3</span><br><span class="line">       return f#######返回f函数</span><br><span class="line">   fn.append(get())###返回结果</span><br><span class="line">   return fn</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def get():</span><br><span class="line">       def f():</span><br><span class="line">           return 3*3</span><br><span class="line">       return f()######返回结果</span><br><span class="line">   fn.append(get)#####返回函数</span><br><span class="line">   return fn</span><br><span class="line">   #----------------------------------------------------</span><br><span class="line">   def count():</span><br><span class="line">   fn = []</span><br><span class="line">   def f():</span><br><span class="line">       return 3*3</span><br><span class="line">   fn.append(f)#####返回函数</span><br><span class="line">   return fn</span><br></pre></td></tr></table></figure>
+
+最终结果都是一样的哈哈，现在的程序员，真的是......没毛病！！！
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程之返回函数/" data-id="cjazarekj0008rgnhlxuwmn0o" class="article-share-link" data-share="baidu" data-title="python函数式编程之返回函数">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/12/09/python函数式编程之返回函数/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python函数式编程sorted" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/09/python函数式编程sorted/" class="article-date">
@@ -115,11 +172,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python函数式编程sorted/" data-id="cjaz3wmw30008oanhpekfeb06" class="article-share-link" data-share="baidu" data-title="python函数式编程sorted">Share</a>
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程sorted/" data-id="cjazarekf0005rgnhhtsxtpce" class="article-share-link" data-share="baidu" data-title="python函数式编程sorted">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python函数式编程sorted/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/09/python函数式编程sorted/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -202,11 +259,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python函数式编程reduce/" data-id="cjaz3wmvn0004oanhxqyst3zu" class="article-share-link" data-share="baidu" data-title="python函数式编程reduce">Share</a>
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程reduce/" data-id="cjazareka0004rgnhtpchrofl" class="article-share-link" data-share="baidu" data-title="python函数式编程reduce">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python函数式编程reduce/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/09/python函数式编程reduce/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -257,11 +314,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python函数式编程map/" data-id="cjaz3wmvb0001oanhkaip06q0" class="article-share-link" data-share="baidu" data-title="python函数式编程map">Share</a>
+        <a data-url="http://yoursite.com/2017/12/09/python函数式编程map/" data-id="cjazarek80003rgnhrgjnjdi9" class="article-share-link" data-share="baidu" data-title="python函数式编程map">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python函数式编程map/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/09/python函数式编程map/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -329,11 +386,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python高级特性生成器/" data-id="cjaz3wmvr0005oanhr4hfwco8" class="article-share-link" data-share="baidu" data-title="python高级特性-生成器">Share</a>
+        <a data-url="http://yoursite.com/2017/12/09/python高级特性生成器/" data-id="cjazarekn000argnhyjbe26va" class="article-share-link" data-share="baidu" data-title="python高级特性-生成器">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python高级特性生成器/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/09/python高级特性生成器/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -412,11 +469,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/09/python高级特性迭代器/" data-id="cjaz3wmw5000aoanh4yvvlm94" class="article-share-link" data-share="baidu" data-title="python高级特性-迭代器">Share</a>
+        <a data-url="http://yoursite.com/2017/12/09/python高级特性迭代器/" data-id="cjazarekz000drgnhsubi50ba" class="article-share-link" data-share="baidu" data-title="python高级特性-迭代器">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/09/python高级特性迭代器/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/09/python高级特性迭代器/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -484,11 +541,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/07/python函数式编程-filter/" data-id="cjaz3wmvk0003oanhtp77ulpb" class="article-share-link" data-share="baidu" data-title="python函数式编程-filter">Share</a>
+        <a data-url="http://yoursite.com/2017/12/07/python函数式编程-filter/" data-id="cjazarejy0001rgnh83vqgi07" class="article-share-link" data-share="baidu" data-title="python函数式编程-filter">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/07/python函数式编程-filter/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/07/python函数式编程-filter/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -529,11 +586,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/12/01/hello-github/" data-id="cjaz3wmv30000oanhjflusyt4" class="article-share-link" data-share="baidu" data-title="hello,github">Share</a>
+        <a data-url="http://yoursite.com/2017/12/01/hello-github/" data-id="cjazarejq0000rgnhpzyt2ukt" class="article-share-link" data-share="baidu" data-title="hello,github">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/12/01/hello-github/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2017/12/01/hello-github/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -555,16 +612,16 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">8</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
@@ -573,18 +630,22 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/09/python函数式编程之返回函数/">python函数式编程之返回函数</a>
+          </li>
         
           <li>
             <a href="/2017/12/09/python函数式编程sorted/">python函数式编程sorted</a>
@@ -602,10 +663,6 @@
             <a href="/2017/12/09/python高级特性生成器/">python高级特性-生成器</a>
           </li>
         
-          <li>
-            <a href="/2017/12/09/python高级特性迭代器/">python高级特性-迭代器</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -613,7 +670,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
+    <h3 class="widget-title">友情链接</h3>
     <div class="widget">
       <ul>
         
@@ -658,7 +715,7 @@
 </nav>
   <!-- totop start -->
 <div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 
 <!-- totop end -->
