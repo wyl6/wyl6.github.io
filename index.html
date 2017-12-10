@@ -228,6 +228,231 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/机器学习实战之KNN算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/机器学习实战之KNN算法/" itemprop="url">机器学习实战之KNN算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-10T19:05:29+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Python导入数据"><a href="#1-Python导入数据" class="headerlink" title="1.Python导入数据"></a>1.Python导入数据</h1><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> * <span class="comment"># import scientific computing package numpy</span></span><br><span class="line"><span class="keyword">import</span> operator <span class="comment"># import operator modular</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># createDataSet主要用来创建数据集和标签</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createDateSet</span><span class="params">()</span>:</span></span><br><span class="line">    group = array([[<span class="number">1.0</span>,<span class="number">1.1</span>],[<span class="number">1.0</span>,<span class="number">1.0</span>],[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0.1</span>]])</span><br><span class="line">    labels = [<span class="string">'A'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'B'</span>]</span><br><span class="line">    <span class="keyword">return</span> group,labels</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> knn</span><br><span class="line">datingDataMat,datingLabels = kNN.file2matrix(<span class="string">'datingTestSet2.txt'</span>)</span><br><span class="line">print(datingDataMat);print(datingLabels)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[  4.09200000e+04   8.32697600e+00   9.53952000e-01]</span><br><span class="line"> [  1.44880000e+04   7.15346900e+00   1.67390400e+00]</span><br><span class="line"> [  2.60520000e+04   1.44187100e+00   8.05124000e-01]</span><br><span class="line"> ..., </span><br><span class="line"> [  2.65750000e+04   1.06501020e+01   8.66627000e-01]</span><br><span class="line"> [  4.81110000e+04   9.13452800e+00   7.28045000e-01]</span><br><span class="line"> [  4.37570000e+04   7.88260100e+00   1.33244600e+00]]</span><br><span class="line">[3, 2, 1, 1, 1, 1, 3, 3, 1, 3, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3, 2, 1, 2, 3, 2, 3, 2, 3, 2, 1, 3, 1, 3, 1, 2, 1, 1, 2, 3, 3, 1, 2, 3, 3, 3, 1, 1, 1, 1, 2, 2, 1, 3, 2, 2, 2, 2, 3, 1, 2, 1, 2, 2, 2, 2, 2, 3, 2, 3, 1, 2, 3, 2, 2, 1, 3, 1, 1, 3, 3, 1, 2, 3, 1, 3, 1, 2, 2, 1, 1, 3, 3, 1, 2, 1, 3, 3, 2, 1, 1, 3, 1, 2, 3, 3, 2, 3, 3, 1, 2, 3, 2, 1, 3, 1, 2, 1, 1, 2, 3, 2, 3, 2, 3, 2, 1, 3, 3, 3, 1, 3, 2, 2, 3, 1, 3, 3, 3, 1, 3, 1, 1, 3, 3, 2, 3, 3, 1, 2, 3, 2, 2, 3, 3, 3, 1, 2, 2, 1, 1, 3, 2, 3, 3, 1, 2, 1, 3, 1, 2, 3, 2, 3, 1, 1, 1, 3, 2, 3, 1, 3, 2, 1, 3, 2, 2, 3, 2, 3, 2, 1, 1, 3, 1, 3, 2, 2, 2, 3, 2, 2, 1, 2, 2, 3, 1, 3, 3, 2, 1, 1, 1, 2, 1, 3, 3, 3, 3, 2, 1, 1, 1, 2, 3, 2, 1, 3, 1, 3, 2, 2, 3, 1, 3, 1, 1, 2, 1, 2, 2, 1, 3, 1, 3, 2, 3, 1, 2, 3, 1, 1, 1, 1, 2, 3, 2, 2, 3, 1, 2, 1, 1, 1, 3, 3, 2, 1, 1, 1, 2, 2, 3, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2, 2, 3, 2, 3, 3, 3, 3, 1, 2, 3, 1, 1, 1, 3, 1, 3, 2, 2, 1, 3, 1, 3, 2, 2, 1, 2, 2, 3, 1, 3, 2, 1, 1, 3, 3, 2, 3, 3, 2, 3, 1, 3, 1, 3, 3, 1, 3, 2, 1, 3, 1, 3, 2, 1, 2, 2, 1, 3, 1, 1, 3, 3, 2, 2, 3, 1, 2, 3, 3, 2, 2, 1, 1, 1, 1, 3, 2, 1, 1, 3, 2, 1, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 1, 3, 2, 1, 3, 2, 1, 3, 1, 1, 3, 3, 3, 3, 2, 1, 1, 2, 1, 3, 3, 2, 1, 2, 3, 2, 1, 2, 2, 2, 1, 1, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 3, 1, 1, 2, 2, 1, 2, 2, 2, 3, 1, 1, 1, 3, 1, 3, 1, 3, 3, 1, 1, 1, 3, 2, 3, 3, 2, 2, 1, 1, 1, 2, 1, 2, 2, 3, 3, 3, 1, 1, 3, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 1, 2, 3, 2, 1, 1, 1, 1, 3, 3, 3, 3, 2, 1, 1, 1, 1, 3, 1, 1, 2, 1, 1, 2, 3, 2, 1, 2, 2, 2, 3, 2, 1, 3, 2, 3, 2, 3, 2, 1, 1, 2, 3, 1, 3, 3, 3, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 3, 2, 1, 3, 3, 2, 2, 2, 3, 1, 2, 1, 1, 3, 2, 3, 2, 3, 2, 3, 3, 2, 2, 1, 3, 1, 2, 1, 3, 1, 1, 1, 3, 1, 1, 3, 3, 2, 2, 1, 3, 1, 1, 3, 2, 3, 1, 1, 3, 1, 3, 3, 1, 2, 3, 1, 3, 1, 1, 2, 1, 3, 1, 1, 1, 1, 2, 1, 3, 1, 2, 1, 3, 1, 3, 1, 1, 2, 2, 2, 3, 2, 2, 1, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 1, 3, 2, 3, 2, 1, 2, 1, 1, 1, 2, 3, 2, 2, 1, 2, 2, 1, 3, 1, 3, 3, 3, 2, 2, 3, 3, 1, 2, 2, 2, 3, 1, 2, 1, 3, 1, 2, 3, 1, 1, 1, 2, 2, 3, 1, 3, 1, 1, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 2, 2, 2, 3, 1, 3, 1, 2, 3, 2, 2, 3, 1, 2, 3, 2, 3, 1, 2, 2, 3, 1, 1, 1, 2, 2, 1, 1, 2, 1, 2, 1, 2, 3, 2, 1, 3, 3, 3, 1, 1, 3, 1, 2, 3, 3, 2, 2, 2, 1, 2, 3, 2, 2, 3, 2, 2, 2, 3, 3, 2, 1, 3, 2, 1, 3, 3, 1, 2, 3, 2, 1, 3, 3, 3, 1, 2, 2, 2, 3, 2, 3, 3, 1, 2, 1, 1, 2, 1, 3, 1, 2, 2, 1, 3, 2, 1, 3, 3, 2, 2, 2, 1, 2, 2, 1, 3, 1, 3, 1, 3, 3, 1, 1, 2, 3, 2, 2, 3, 1, 1, 1, 1, 3, 2, 2, 1, 3, 1, 2, 3, 1, 3, 1, 3, 1, 1, 3, 2, 3, 1, 1, 3, 3, 3, 3, 1, 3, 2, 2, 1, 1, 3, 3, 2, 2, 2, 1, 2, 1, 2, 1, 3, 2, 1, 2, 2, 3, 1, 2, 2, 2, 3, 2, 1, 2, 1, 2, 3, 3, 2, 3, 1, 1, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 3, 3, 3, 3, 3, 1, 1, 3, 2, 1, 2, 1, 2, 2, 3, 2, 2, 2, 3, 1, 2, 1, 2, 2, 1, 1, 2, 3, 3, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 1, 3, 3, 2, 3, 2, 3, 3, 2, 2, 1, 1, 1, 3, 3, 1, 1, 1, 3, 3, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 3, 1, 1, 2, 3, 2, 2, 1, 3, 1, 2, 3, 1, 2, 2, 2, 2, 3, 2, 3, 3, 1, 2, 1, 2, 3, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 1, 3, 3, 3]</span><br></pre></td></tr></table></figure>
+<h1 id="2-KNN算法实现"><a href="#2-KNN算法实现" class="headerlink" title="2.KNN算法实现"></a>2.KNN算法实现</h1><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#knn classification</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX,dataSet,labels,k)</span>:</span>    <span class="comment">#test,train,label,k</span></span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]  <span class="comment"># shape[0]行，shape[1]列</span></span><br><span class="line">    diffMat = tile(inX,(dataSetSize,<span class="number">1</span>))-dataSet <span class="comment"># tile(a,rep)a在各个维度重复，此处指dataSetSize行，1列</span></span><br><span class="line">    sqDiffMat = diffMat**<span class="number">2</span>  <span class="comment"># 距离平方</span></span><br><span class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>) <span class="comment"># axis=0按行相加，axis=1按列相加</span></span><br><span class="line">    distances = sqDistances**<span class="number">0.5</span> <span class="comment"># 距离平方开根号</span></span><br><span class="line">    sortedDistIndices = distances.argsort() <span class="comment"># 距离由小到大排序</span></span><br><span class="line">    classCount = &#123;&#125; <span class="comment"># dict存储标签及其出现的次数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndices[i]]   <span class="comment"># 距离最近的第i个</span></span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,<span class="number">0</span>)+<span class="number">1</span> <span class="comment"># 字典中对应出现次数+1</span></span><br><span class="line">    sortedClassCount = sorted(classCount.items(),key=operator.itemgetter(<span class="number">1</span>),reverse=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment">#itemgetter(0)按照key排序，itemgetter(1)按照value排序，reverse默认False从小到大，True的话从大到小</span></span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]   <span class="comment"># 排在最前面那对item的第一个值（A or B,the label we need）</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> knn</span><br><span class="line">print(kNN.classify0([<span class="number">0</span>,<span class="number">0</span>],group,labels,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B</span><br></pre></td></tr></table></figure>
+<h1 id="3-Example-使用KNN改进约会网站的配对效果"><a href="#3-Example-使用KNN改进约会网站的配对效果" class="headerlink" title="3.Example:使用KNN改进约会网站的配对效果"></a>3.Example:使用KNN改进约会网站的配对效果</h1><h2 id="3-1-从文本文件中读取数据并解析"><a href="#3-1-从文本文件中读取数据并解析" class="headerlink" title="3.1.从文本文件中读取数据并解析"></a>3.1.从文本文件中读取数据并解析</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kNN readfile</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">file2matrix</span><span class="params">(filename)</span>:</span></span><br><span class="line">    fr = open(filename)</span><br><span class="line">    arrayOLines = fr.readlines()    <span class="comment"># 一次读取整个文件，并将文件内容自动分析成一个行的列表</span></span><br><span class="line">    numberOfLines = len(arrayOLines)    <span class="comment"># 获得行数n</span></span><br><span class="line">    returnMat = zeros((numberOfLines,<span class="number">3</span>)) <span class="comment"># n行3列值全为0的数组</span></span><br><span class="line">    classLabelVector = []</span><br><span class="line">    index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> arrayOLines:</span><br><span class="line">        line = line.strip() <span class="comment"># 移除字符串首尾的空格</span></span><br><span class="line">        listFromLine = line.split(<span class="string">'\t'</span>) <span class="comment"># split(str,num)按照分隔符str进行切片，str默认空格、\n、\t，返回列表</span></span><br><span class="line">        returnMat[index,:] = listFromLine[<span class="number">0</span>:<span class="number">3</span>] <span class="comment"># 给第index行赋值（获取文件每行前3维元素）</span></span><br><span class="line">        classLabelVector.append(int(listFromLine[<span class="number">-1</span>]))  <span class="comment"># 获取文件每行最后一个元素label</span></span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> returnMat,classLabelVector   <span class="comment">#返回文件处理的样本矩阵和类标签向量</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kNN</span><br><span class="line">datingDataMat,datingLabels = kNN.file2matrix(<span class="string">'datingTestSet2.txt'</span>)</span><br><span class="line">print(datingDataMat);print(datingLabels[<span class="number">0</span>:<span class="number">20</span>])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[  <span class="number">4.09200000e+04</span>   <span class="number">8.32697600e+00</span>   <span class="number">9.53952000e-01</span>]</span><br><span class="line"> [  <span class="number">1.44880000e+04</span>   <span class="number">7.15346900e+00</span>   <span class="number">1.67390400e+00</span>]</span><br><span class="line"> [  <span class="number">2.60520000e+04</span>   <span class="number">1.44187100e+00</span>   <span class="number">8.05124000e-01</span>]</span><br><span class="line"> ..., </span><br><span class="line"> [  <span class="number">2.65750000e+04</span>   <span class="number">1.06501020e+01</span>   <span class="number">8.66627000e-01</span>]</span><br><span class="line"> [  <span class="number">4.81110000e+04</span>   <span class="number">9.13452800e+00</span>   <span class="number">7.28045000e-01</span>]</span><br><span class="line"> [  <span class="number">4.37570000e+04</span>   <span class="number">7.88260100e+00</span>   <span class="number">1.33244600e+00</span>]]</span><br><span class="line">[<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-使用matplotlib创建散点图"><a href="#3-2-使用matplotlib创建散点图" class="headerlink" title="3.2.使用matplotlib创建散点图"></a>3.2.使用matplotlib创建散点图</h2><blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">fig = plt.figure()</span><br><span class="line"></span><br><span class="line">ax = fig.add_subplot(<span class="number">211</span>)   <span class="comment"># ax放在2行1列的第一个位置</span></span><br><span class="line">ax.scatter(datingDataMat[:,<span class="number">1</span>],datingDataMat[:,<span class="number">2</span>],<span class="number">15.0</span>*array(datingLabels),<span class="number">15.0</span>*array(datingLabels))</span><br><span class="line"></span><br><span class="line">bx = fig.add_subplot(<span class="number">212</span>)   <span class="comment"># bx放在2行1列的第二个位置</span></span><br><span class="line">bx.scatter(datingDataMat[:,<span class="number">0</span>],datingDataMat[:,<span class="number">1</span>],<span class="number">15.0</span>*array(datingLabels),<span class="number">15.0</span>*array(datingLabels))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>散点图使用datingDataMat矩阵的第2和第3列数据，分别表示玩视频游戏所耗时间百分比和每周所消费的冰淇淋公升数</p>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<p><img src="./img/1.png" alt="1.png"></p>
+<h2 id="3-3-归一化数值"><a href="#3-3-归一化数值" class="headerlink" title="3.3.归一化数值"></a>3.3.归一化数值</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kNN normalization</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">autoNorm</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    minVals = dataSet.min(<span class="number">0</span>)    <span class="comment"># calculate min from every col,res:1*3</span></span><br><span class="line">    maxVals = dataSet.max(<span class="number">0</span>)</span><br><span class="line">    ranges = maxVals-minVals</span><br><span class="line">    normDataSet = zeros(shape(dataSet)) <span class="comment"># shape--read the len of mat</span></span><br><span class="line">    m = dataSet.shape[<span class="number">0</span>]    <span class="comment"># shape[0]--row;shape[1]--col</span></span><br><span class="line">    normDataSet = dataSet-tile(minVals,(m,<span class="number">1</span>))   <span class="comment"># numpy.tile([0,0],(2,1))#在列方向上重复[0,0]1次，行2次</span></span><br><span class="line">    normDataSet = normDataSet/tile(ranges,(m,<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">return</span> normDataSet,ranges,minVals   <span class="comment"># 返回标准化的数据，范围和最小值</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">normMat,ranges,minVals = kNN.autoNorm(datingDataMat)</span><br><span class="line">print(normMat);print(ranges);print(minVals)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[[ <span class="number">0.44832535</span>  <span class="number">0.39805139</span>  <span class="number">0.56233353</span>]</span><br><span class="line"> [ <span class="number">0.15873259</span>  <span class="number">0.34195467</span>  <span class="number">0.98724416</span>]</span><br><span class="line"> [ <span class="number">0.28542943</span>  <span class="number">0.06892523</span>  <span class="number">0.47449629</span>]</span><br><span class="line"> ..., </span><br><span class="line"> [ <span class="number">0.29115949</span>  <span class="number">0.50910294</span>  <span class="number">0.51079493</span>]</span><br><span class="line"> [ <span class="number">0.52711097</span>  <span class="number">0.43665451</span>  <span class="number">0.4290048</span> ]</span><br><span class="line"> [ <span class="number">0.47940793</span>  <span class="number">0.3768091</span>   <span class="number">0.78571804</span>]]</span><br><span class="line">[  <span class="number">9.12730000e+04</span>   <span class="number">2.09193490e+01</span>   <span class="number">1.69436100e+00</span>]</span><br><span class="line">[ <span class="number">0.</span>        <span class="number">0.</span>        <span class="number">0.001156</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="3-4-预测分类器效果"><a href="#3-4-预测分类器效果" class="headerlink" title="3.4.预测分类器效果"></a>3.4.预测分类器效果</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kNN vertification</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">datingClassTest</span><span class="params">()</span>:</span></span><br><span class="line">    hoRatio = <span class="number">0.10</span>  <span class="comment">#hold out 10% as testing data</span></span><br><span class="line">    datingDataMat,datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)  <span class="comment">#load message from file</span></span><br><span class="line">    normMat,ranges,minVals = autoNorm(datingDataMat)    <span class="comment">#normalization</span></span><br><span class="line">    m = normMat.shape[<span class="number">0</span>]    <span class="comment">#get numbers of normalized data</span></span><br><span class="line">    numTestVecs = int(m*hoRatio)</span><br><span class="line">    errorCount = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTestVecs):</span><br><span class="line">        classifierResult = classify0(normMat[i,:],normMat[numTestVecs:m,:],\</span><br><span class="line">                                     datingLabels[numTestVecs:m],<span class="number">3</span>)</span><br><span class="line">        print(<span class="string">"the classifier came back with:%d,the real answer is:%d"</span>\</span><br><span class="line">              %(classifierResult,datingLabels[i]))</span><br><span class="line">        <span class="keyword">if</span>(classifierResult != datingLabels[i]):errorCount += <span class="number">1.0</span></span><br><span class="line">    print(<span class="string">"the total error rate is: %f "</span>%(errorCount/float(numTestVecs)))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kNN.datingClassTest()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">3</span>,the real answer <span class="keyword">is</span>:<span class="number">3</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">2</span>,the real answer <span class="keyword">is</span>:<span class="number">2</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">1</span>,the real answer <span class="keyword">is</span>:<span class="number">1</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">1</span>,the real answer <span class="keyword">is</span>:<span class="number">1</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">1</span>,the real answer <span class="keyword">is</span>:<span class="number">1</span></span><br><span class="line">...,</span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">2</span>,the real answer <span class="keyword">is</span>:<span class="number">2</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">1</span>,the real answer <span class="keyword">is</span>:<span class="number">1</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">3</span>,the real answer <span class="keyword">is</span>:<span class="number">1</span></span><br><span class="line">the total error rate <span class="keyword">is</span>: <span class="number">0.050000</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-5-约会网站结果预测"><a href="#3-5-约会网站结果预测" class="headerlink" title="3.5.约会网站结果预测"></a>3.5.约会网站结果预测</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kNN prediction</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyPerson</span><span class="params">()</span>:</span></span><br><span class="line">    resultList = [<span class="string">'not at all'</span>,<span class="string">'in small doses'</span>,<span class="string">'in large doses'</span>]   <span class="comment"># 结果标签</span></span><br><span class="line">    percentTats = float(input(<span class="string">"percentage of time spent playing video games?"</span>)) <span class="comment"># 输入数据</span></span><br><span class="line">    ffMiles = float(input(<span class="string">"frequent flier miles earned per year:"</span>))</span><br><span class="line">    iceCream = float(input(<span class="string">"liters of ice cream consumed per year?"</span>))</span><br><span class="line">    datingDataMat,datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)  <span class="comment"># 从文件中读入数据</span></span><br><span class="line">    normMat,ranges,minVals = autoNorm(datingDataMat)    <span class="comment"># 数据归一化</span></span><br><span class="line">    inArr = array([ffMiles,percentTats,iceCream])   <span class="comment"># 输入数据转化为数组作为预测数据</span></span><br><span class="line">    classifierResult = classify0((inArr-minVals)/ranges,normMat,datingLabels,<span class="number">3</span>)</span><br><span class="line">    print(<span class="string">'you will probably like this person:'</span>,resultList[classifierResult<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kNN.classifyPerson()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">percentage of time spent playing video games?3</span><br><span class="line">frequent flier miles earned per year:<span class="number">10000</span></span><br><span class="line">liters of ice cream consumed per year?5</span><br><span class="line">you will probably like this person: <span class="keyword">in</span> small doses</span><br></pre></td></tr></table></figure>
+<h1 id="4-手写识别系统"><a href="#4-手写识别系统" class="headerlink" title="4.手写识别系统"></a>4.手写识别系统</h1><h2 id="4-1图形转为向量"><a href="#4-1图形转为向量" class="headerlink" title="4.1图形转为向量"></a>4.1图形转为向量</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#convert img to vector</span></span><br><span class="line"><span class="comment"># 把一个32*32的图片转化为1*1024的向量</span></span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir  <span class="comment">#list filename of file</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2vector</span><span class="params">(filename)</span>:</span></span><br><span class="line">    returnVect = zeros((<span class="number">1</span>,<span class="number">1024</span>))    <span class="comment"># 1*1024numpy向量</span></span><br><span class="line">    fr = open(filename)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>): <span class="comment"># 读入32行</span></span><br><span class="line">        lineStr = fr.readline()</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">            returnVect[<span class="number">0</span>,<span class="number">32</span>*i+j] = int(lineStr[j]) <span class="comment"># 每行数据存储在numpy向量中</span></span><br><span class="line">    <span class="keyword">return</span> returnVect</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">testVector = kNN.img2vector(<span class="string">'testDigits/0_13.txt'</span>)</span><br><span class="line">print(testVector[<span class="number">0</span>,<span class="number">0</span>:<span class="number">31</span>])</span><br><span class="line">print(testVector[<span class="number">0</span>,<span class="number">32</span>:<span class="number">63</span>])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span></span><br><span class="line">  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>]</span><br><span class="line">[ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">1.</span></span><br><span class="line">  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-k-紧邻算法识别手写数字"><a href="#4-2-k-紧邻算法识别手写数字" class="headerlink" title="4.2.k-紧邻算法识别手写数字"></a>4.2.k-紧邻算法识别手写数字</h2><blockquote>
+<p>knn.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#test numbers using kNN classify0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handwritingClassTest</span><span class="params">()</span>:</span></span><br><span class="line">    hwLabels = []</span><br><span class="line">    trainingFileList = listdir(<span class="string">'trainingDigits'</span>)</span><br><span class="line">    m = len(trainingFileList)   <span class="comment"># 图片数量</span></span><br><span class="line">    trainingMat = zeros((m,<span class="number">1024</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">        fileNameStr = trainingFileList[i]   <span class="comment"># 第i个图片</span></span><br><span class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>] <span class="comment"># 根据.分割文件名称并获取第一个字符（0_1或1_1或2_1等）</span></span><br><span class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])    <span class="comment"># 根据_分割文件名称并获取0 1等</span></span><br><span class="line">        hwLabels.append(classNumStr)</span><br><span class="line">        trainingMat[i,:] = img2vector(<span class="string">'trainingDigits/%s'</span>%fileNameStr)</span><br><span class="line"></span><br><span class="line">    testFileList = listdir(<span class="string">'testDigits'</span>)</span><br><span class="line">    errorCount = <span class="number">0.0</span></span><br><span class="line">    mTest = len(testFileList)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(mTest):</span><br><span class="line">        fileNameStr = testFileList[i]   <span class="comment"># 第i个文件名称的字符串形式</span></span><br><span class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>] <span class="comment"># 根据.分割文件名称并获取第一个字符（文件顺序0_1,0_2,0_3...）</span></span><br><span class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])    <span class="comment"># 获取文件名1,2,3...</span></span><br><span class="line">        vectorUnderTest = img2vector(<span class="string">'testDigits/%s'</span>%fileNameStr)   <span class="comment"># 图像转化为向量</span></span><br><span class="line">        classifierResult = classify0(vectorUnderTest,\</span><br><span class="line">                                     trainingMat,hwLabels,<span class="number">3</span>)</span><br><span class="line">        print(<span class="string">'the classifier came back with:%d,the real answer is:%d'</span>\</span><br><span class="line">              %(classifierResult,classNumStr))</span><br><span class="line">        <span class="keyword">if</span>(classifierResult != classNumStr):errorCount += <span class="number">1.0</span></span><br><span class="line">    print(<span class="string">'\nthe total number of errors is :%d'</span>%errorCount)</span><br><span class="line">    print(<span class="string">'\nthe total error rate is :%f'</span>%(errorCount/float(mTest)))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>knnTest.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kNN.handwritingClassTest()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">9</span>,the real answer <span class="keyword">is</span>:<span class="number">9</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">7</span>,the real answer <span class="keyword">is</span>:<span class="number">7</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">7</span>,the real answer <span class="keyword">is</span>:<span class="number">7</span></span><br><span class="line">...,</span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">4</span>,the real answer <span class="keyword">is</span>:<span class="number">4</span></span><br><span class="line">the classifier came back <span class="keyword">with</span>:<span class="number">5</span>,the real answer <span class="keyword">is</span>:<span class="number">5</span></span><br><span class="line"></span><br><span class="line">the total number of errors <span class="keyword">is</span> :<span class="number">11</span></span><br><span class="line"></span><br><span class="line">the total error rate <span class="keyword">is</span> :<span class="number">0.011628</span></span><br></pre></td></tr></table></figure>
+<p>这个算法并不高效，有900个测试图片；<br>对于每一个测试图片，首先要一步复杂度为1024运的算转化为测试向量；<br>每个测试向量都要运行900次距离计算；<br>每次距离计算都是1024个浮点数的计算。。。<br>有没有一种算法更加节省空间和时间呢？<br>跟着《机器学习实战》这本书的步伐，很快我们就知道，有一种叫做k决策树的大佬，<br>据说是k-紧邻算法的优化版，可以大大得节省计算开销。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/09/python函数式编程之返回函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1398,7 +1623,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
@@ -1411,7 +1636,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">Tags</span>
                 
               </div>
