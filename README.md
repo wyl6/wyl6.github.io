@@ -1,2 +1,2 @@
 # wyl6.github.io
-# Blog In GitHub
+Blog In GitHub
